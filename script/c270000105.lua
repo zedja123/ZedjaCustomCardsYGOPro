@@ -70,16 +70,12 @@ function c270000105.tdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,c270000105.tdfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,1,nil,tp)
 	local tc=g:GetFirst()
-	local b1 = tc:IsAbleToDeck()
-	local b2 = tc:IsType(TYPE_SPELL) and tc:IsControler(tp) and tc:IsSetCard(0xf11) and tc:IsAbleToHand()
-	local opt=Duel.SelectOption(tp,
-		  {b1,aux.Stringid(270000105,3)},
-		  {b2,aux.Stringid(270000105,4)})
-		if opt==0 then
-			Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
-		elseif opt==1 then
+	if tc then
+		if tc:IsSetCard(0xf11) and tc:IsType(TYPE_SPELL) and tc:IsControler(tp) and Duel.SelectYesNo(tp,aux.Stringid(270000105,3)) then
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,tc)
+		else
+			Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
+		end
 	end
 end
 

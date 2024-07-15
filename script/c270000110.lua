@@ -1,7 +1,7 @@
 --Wiccanthrope Sperelfler
 function c270000110.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,5,2,c270000110.ovfilter,aux.Stringid(270000110,0))
+	Xyz.AddProcedure(c,nil,5,2,c270000110.ovfilter,aux.Stringid(270000110,0))
 	c:EnableReviveLimit()
 	-- ATK/DEF boost for Banished Spells
 	local e1=Effect.CreateEffect(c)
@@ -17,7 +17,7 @@ function c270000110.initial_effect(c)
 	c:RegisterEffect(e2)
 	-- Quick Effect: Detach material, Special Summon from GY, banish Spell, attach Spell from Deck
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(270000110,0))
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_REMOVE)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
@@ -30,7 +30,7 @@ function c270000110.initial_effect(c)
 end
 
 function c270000110.ovfilter(c,tp,lc)
-	return c:IsFaceup() and c:IsRankBelow(4) and c:IsSetCard(0xf11,lc,SUMMON_TYPE_XYZ,tp) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsRankBelow(4) and c:IsSetCard(0xf11,lc,SUMMON_TYPE_XYZ,tp)
 end
 
 -- ATK/DEF boost function
@@ -39,11 +39,11 @@ function c270000110.atktg(e,c)
 end
 
 function c270000110.atkspellbanish(c)
-    return c:IsType(TYPE_SPELL) and c:IsFaceup()
+	return c:IsType(TYPE_SPELL) and c:IsFaceup()
 end
 
 function c270000110.atkval(e,c)
-	return Duel.GetMatchingGroupCount(c270000110.atkspellbanish,e:GetHandlerPlayer(),LOCATION_REMOVED,LOCATION_REMOVED,nil,nil)*300
+	return Duel.GetMatchingGroupCount(c270000110.atkspellbanish,e:GetHandlerPlayer(),LOCATION_REMOVED,LOCATION_REMOVED,nil)*300
 end
 
 function c270000110.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -55,28 +55,22 @@ function c270000110.spfilter(c,e,tp)
 	return c:IsSetCard(0xf11) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 
-function c270000110.deckfilter(c)
-	return c:IsType(TYPE_SPELL)
+function c270000110.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c270000110.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 
 function c270000110.banfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToRemoveAsCost()
-end
-
-function c270000110.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c270000110.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
-		and Duel.IsExistingMatchingCard(c270000110.banfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil,nil) and Duel.IsExistingMatchingCard(c270000110.deckfilter,tp,LOCATION_DECK,0,1,nil,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE)
+	return c:IsSpell() and c:IsAbleToRemoveAsCost()
 end
 
 function c270000110.attachfilter(c)
-	return c:IsType(TYPE_SPELL) and not c:IsForbidden()
+	return c:IsSpell()
 end
 
-function c270000110.faceupxyz(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ)
+function c270000110.xyzfilter(c,tp)
+	return c:IsType(TYPE_XYZ) and c:IsControler(tp)
 end
 
 function c270000110.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -95,17 +89,18 @@ function c270000110.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(LOCATION_REMOVED)
 		tc:RegisterEffect(e1,true)
 		-- Optional banish Spell and attach Spell from Deck
-		if Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil,TYPE_SPELL) then
+		if Duel.IsExistingMatchingCard(c270000110.banfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil) 
+			and Duel.SelectYesNo(tp,aux.Stringid(270000110,2)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-			local sg=Duel.SelectMatchingCard(tp,Card.IsType,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,1,1,nil,TYPE_SPELL)
-			if #sg>0 and Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)~=0 then
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-				local tg=Duel.SelectMatchingCard(tp,c270000107.faceupxyz,tp,LOCATION_MZONE,0,1,1,nil)
-				if #tg>0 then
-					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-					local ag=Duel.SelectMatchingCard(tp,c270000110.attachfilter,tp,LOCATION_DECK,0,1,1,nil)
-					if #ag>0 then
-						Duel.Overlay(tg:GetFirst(),ag)
+			local sg=Duel.SelectMatchingCard(tp,c270000110.banfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,1,1,nil)
+			if Duel.Remove(sg,POS_FACEUP,REASON_COST)~=0 then
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
+				local tg=Duel.SelectMatchingCard(tp,c270000110.attachfilter,tp,LOCATION_DECK,0,1,1,nil)
+				if #tg>0 and Duel.IsExistingMatchingCard(c270000110.xyzfilter,tp,LOCATION_MZONE,0,1,nil,tp) then
+					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+					local xyz=Duel.SelectMatchingCard(tp,c270000110.xyzfilter,tp,LOCATION_MZONE,0,1,1,nil,tp):GetFirst()
+					if xyz then
+						Duel.Overlay(xyz,tg)
 					end
 				end
 			end
