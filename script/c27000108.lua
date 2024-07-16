@@ -61,7 +61,7 @@ function c27000108.detachcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 
 function c27000108.banfilter(c)
-	return c:IsSpell() and c:IsAbleToRemoveAsCost()
+	return c:IsType(TYPE_SPELL) and c:IsAbleToRemoveAsCost()
 end
 
 function c27000108.setfilter(c)
