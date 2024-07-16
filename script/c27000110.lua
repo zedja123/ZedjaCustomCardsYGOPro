@@ -66,7 +66,7 @@ function c27000110.banfilter(c)
 end
 
 function c27000110.attachfilter(c)
-	return c:IsSpell()
+	return c:IsType(TYPE_SPELL)
 end
 
 function c27000110.xyzfilter(c,tp)
