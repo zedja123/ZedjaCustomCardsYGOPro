@@ -1,7 +1,7 @@
 --Wiccanthrope Spedallacer
 function c27000109.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,nil,4,2,nil,nil,nil,nil,false,c27000109.xyzcheck)
+	aux.AddXyzProcedure(c,nil,4,2,nil,nil,nil,nil,false,c27000109.xyzcheck)
 	c:EnableReviveLimit()
 	-- XYZ Summoned effect
 	local e1=Effect.CreateEffect(c)

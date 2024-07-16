@@ -1,7 +1,7 @@
 --Wiccanthrope Sperelfler
 function c27000110.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,nil,5,2,c27000110.ovfilter,aux.Stringid(27000110,0))
+	aux.AddXyzProcedure(c,nil,5,2,c27000110.ovfilter,aux.Stringid(27000110,0))
 	c:EnableReviveLimit()
 	-- ATK/DEF boost for Banished Spells
 	local e1=Effect.CreateEffect(c)

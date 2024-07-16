@@ -1,7 +1,7 @@
 --Wiccanthrope Wataquera
 function c27000108.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,nil,4,2,nil,nil,nil,nil,false,c27000108.xyzcheck)
+	aux.AddXyzProcedure(c,nil,4,2,nil,nil,nil,nil,false,c27000108.xyzcheck)
 	c:EnableReviveLimit()
 
 	-- Attach 1 Spell/Trap card on field to this card when Xyz Summoned
