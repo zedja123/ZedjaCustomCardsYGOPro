@@ -63,7 +63,7 @@ function c27000109.banfilter(c)
 end
 
 function c27000109.setfilter(c)
-	return c:IsQuickPlaySpell() and c:IsSSetable() and c:IsSetCard(0xf11)
+	return c:IsType(TYPE_QUICKPLAY) and c:IsSSetable() and c:IsSetCard(0xf11)
 end
 function c27000109.detachtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end
