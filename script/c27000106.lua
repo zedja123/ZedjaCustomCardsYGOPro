@@ -30,7 +30,7 @@ function c27000106.filter(c,e)
 return c:IsFaceup() and c:IsCanBeEffectTarget(e)
 end
 function c27000106.xyzfilter(c,mg,tp)
-return c:IsXyzSummonable(mg,mg,1,2) and Duel.GetLocationCountFromEx(tp,tp,mg,c)>0
+return c:IsXyzSummonable(mg,mg,1,2) and Duel.GetLocationCountFromEx(tp,tp,mg,c)>0 and c:IsSetCard(0xf11)
 end
 function c27000106.rescon(sg,e,tp,mg)
 return Duel.IsExistingMatchingCard(c27000106.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,sg,tp)
