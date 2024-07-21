@@ -31,12 +31,14 @@ function c27000008.spcon(e,c)
     if c==nil then return true end
     local tp=c:GetControler()
     return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-        and Duel.IsExistingMatchingCard(c27000008.spfilter,tp,LOCATION_MZONE,0,1,nil)
+        and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
+        and not Duel.IsExistingMatchingCard(c27000008.spfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 
-function c27000008.spfilter(c,e,tp)
-	return c:IsSetCard(0xf10) and c:IsType(TYPE_MONSTER)
+function c27000008.spfilter(c)
+    return c:IsFaceup() and not c:IsSetCard(0xf10)
 end
+
 
 function c27000008.gytg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
