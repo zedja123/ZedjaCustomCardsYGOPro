@@ -3,8 +3,10 @@ function c27000104.initial_effect(c)
 	-- Special Summon from hand if you control a "Wiccanthrope" monster, except "Wiccanthrope Walioright"
 	local e1 = Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(27000104, 0))
-	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_HAND)
+    e1:SetType(EFFECT_TYPE_FIELD)
+    e1:SetCode(EFFECT_SPSUMMON_PROC)
+    e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+    e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(c27000104.spcon)
 	e1:SetTarget(c27000104.sptg)
 	e1:SetOperation(c27000104.spop)
@@ -42,8 +44,9 @@ end
 function c27000104.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xf11) and not c:IsCode(27000104)
 end
-function c27000104.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c27000104.filter,tp,LOCATION_MZONE,0,1,nil)
+function c27000104.spcon(e,c)
+    if c==nil then return true end
+    return Duel.IsExistingMatchingCard(s.filter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 
 function c27000104.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
