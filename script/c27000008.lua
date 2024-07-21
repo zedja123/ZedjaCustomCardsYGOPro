@@ -3,11 +3,11 @@ function c27000008.initial_effect(c)
 	-- Special Summon itself if you control only "Prismiant" monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(27000008,0))
-	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_HAND)
+    e1:SetType(EFFECT_TYPE_FIELD)
+    e1:SetCode(EFFECT_SPSUMMON_PROC)
+    e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+    e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(c27000008.spcon)
-	e1:SetTarget(c27000008.sptg)
-	e1:SetOperation(c27000008.spop)
 	e1:SetCountLimit(1,27000008)
 	c:RegisterEffect(e1)
 
@@ -27,21 +27,11 @@ function c27000008.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 
-function c27000008.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
-	return #g>0 and g:FilterCount(Card.IsSetCard,nil,0xf10)==#g
-end
-
-function c27000008.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-end
-
-function c27000008.spop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
-		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
-	end
+function c27000008.spcon(e,c)
+    if c==nil then return true end
+    local tp=c:GetControler()
+    return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+        and Duel.IsExistingMatchingCard(c27000008.spfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 
 function c27000008.spfilter(c,e,tp)
