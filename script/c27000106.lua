@@ -27,53 +27,31 @@ end
 
 
 function c27000106.filter(c,e)
-	return c:IsFaceup() and c:IsCanBeEffectTarget(e)
+return c:IsFaceup() and c:IsCanBeEffectTarget(e)
 end
-function c27000106.xyzfilter(c,mg,tp,chk)
-	return c:IsXyzSummonable(nil,mg,2,2) and c:IsSetCard(0xf11) and (not chk or Duel.GetLocationCountFromEx(tp,tp,mg,c)>0)
+function c27000106.xyzfilter(c,mg,tp)
+return c:IsXyzSummonable(mg,mg,1,2) and Duel.GetLocationCountFromEx(tp,tp,mg,c)>0
 end
-function c27000106.mfilter1(c,mg,exg,tp)
-	return mg:IsExists(c27000106.mfilter2,1,c,c,exg,tp)
-end
-function c27000106.zonecheck(c,tp,g)
-	return Duel.GetLocationCountFromEx(tp,tp,g,c)>0 and c:IsXyzSummonable(nil,g)
-end
-function c27000106.mfilter2(c,mc,exg,tp)
-	local g=Group.FromCards(c,mc)
-	return exg:IsExists(c27000106.zonecheck,1,nil,tp,g)
+function c27000106.rescon(sg,e,tp,mg)
+return Duel.IsExistingMatchingCard(c27000106.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,sg,tp)
 end
 function c27000106.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return false end
-	local mg=Duel.GetMatchingGroup(c27000106.filter,tp,LOCATION_MZONE,0,nil,e)
-	local exg=Duel.GetMatchingGroup(c27000106.xyzfilter,tp,LOCATION_EXTRA,0,nil,mg)
-	if chk==0 then return mg:IsExists(c27000106.mfilter1,1,nil,mg,exg,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local sg1=mg:FilterSelect(tp,c27000106.mfilter1,1,1,nil,mg,exg,tp)
-	local tc1=sg1:GetFirst()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local sg2=mg:FilterSelect(tp,c27000106.mfilter2,1,1,tc1,tc1,exg,tp)
-	sg1:Merge(sg2)
-	Duel.SetTargetCard(sg1)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+if chkc then return false end
+local g=Duel.GetMatchingGroup(c27000106.filter,tp,LOCATION_MZONE,0,nil,e)
+if chk==0 then return aux.SelectUnselectGroup(g,e,tp,1,2,c27000106.rescon,0) end
+local sg=aux.SelectUnselectGroup(g,e,tp,1,2,c27000106.rescon,1,tp,HINTMSG_XMATERIAL,c27000106.rescon)
+Duel.SetTargetCard(sg)
+Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
-
-function c27000106.tfilter(c,e)
-	return c:IsRelateToEffect(e) and c:IsFaceup()
-end
-
 function c27000106.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(c27000106.tfilter,nil,e)
-	if #g<2 then return end
-	local xyzg=Duel.GetMatchingGroup(c27000106.xyzfilter,tp,LOCATION_EXTRA,0,nil,g,tp,true)
-	if #xyzg>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyz,nil,g)
-	end
+local g=Duel.GetTargetCards(e):Filter(Card.IsFaceup,nil)
+if #g<1 then return end
+local xyzg=Duel.GetMatchingGroup(c27000106.xyzfilter,tp,LOCATION_EXTRA,0,nil,g,tp)
+if #xyzg>0 then
+Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
+Duel.XyzSummon(tp,xyz,nil,g)
 end
-
-function c27000106.thfilter(c)
-	return c:IsSetCard(0xf11) and c:IsType(TYPE_SPELL) and not c:IsCode(id) and c:IsAbleToHand()
 end
 
 function c27000106.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
