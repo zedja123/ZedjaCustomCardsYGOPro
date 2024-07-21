@@ -37,7 +37,7 @@ end
 
 -- XYZ Summoned effect: Add "Wiccanthrope" card from GY to hand
 function c27000109.thfilter(c)
-	return c:IsSetCard(0xf11) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0xf11) and c:IsAbleToHand()
 end
 function c27000109.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c27000109.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
