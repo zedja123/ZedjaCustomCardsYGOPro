@@ -58,21 +58,21 @@ function c27000101.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 -- Send 1 "Wiccanthrope" card from Deck to GY target
 function c27000101.tgfilter(c)
-	return c:IsSetCard(0xf11) and c:IsAbleToGrave()
+    return c:IsSetCard(0xf11) and c:IsAbleToGrave()
 end
 
 function c27000101.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c27000101.tgfilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+    if chk==0 then return Duel.IsExistingMatchingCard(c27000101.tgfilter,tp,LOCATION_DECK,0,1,nil) end
+    Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 
 -- Send 1 "Wiccanthrope" card from Deck to GY operation
 function c27000101.tgop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c27000101.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if #g>0 then
-		Duel.SendtoGrave(g,REASON_EFFECT)
-	end
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+    local g=Duel.SelectMatchingCard(tp,c27000101.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
+    if #g>0 then
+        Duel.SendtoGrave(g,REASON_EFFECT)
+    end
 end
 
 -- Banish 1 Spell from your Hand, Field or GY; Special Summon 1 "Wiccanthrope" monster from your GY with their effects negated, but banish it when it leaves the field
