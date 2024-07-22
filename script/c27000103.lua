@@ -50,7 +50,7 @@ end
 
 function c27000103.spcon(e,c)
     if c==nil then return true end
-    return Duel.IsExistingMatchingCard(s.filter,c:GetControler(),LOCATION_MZONE,0,1,nil)
+    return Duel.IsExistingMatchingCard(c27000103.filter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 
 function c27000103.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
