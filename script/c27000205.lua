@@ -1,5 +1,5 @@
 --Ashens Ruller - Ornstein
-function cc27000205.initial_effect(c)
+function c27000205.initial_effect(c)
 	-- Special Summon itself from GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
