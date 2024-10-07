@@ -2,7 +2,7 @@
 function c27000209.initial_effect(c)
 	-- Link Summon
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_ZOMBIE),1,2)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_ZOMBIE),1,2)
 
 	-- Special Summon from GY
 	local e1=Effect.CreateEffect(c)

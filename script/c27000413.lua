@@ -2,7 +2,7 @@
 function c27000413.initial_effect(c)
 	-- Link Summon
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xf15),1,3)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xf15),1,3)
 	c:SetSPSummonOnce(id)
 
 	-- Also FIRE Attribute

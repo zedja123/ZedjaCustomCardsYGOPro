@@ -2,7 +2,7 @@ function c27000210.initial_effect(c)
 	-- Link Summon procedure
 	c:EnableReviveLimit()
 	c:SetUniqueOnField(1,0,id)
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT+TYPE_TOKEN),1,4)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT+TYPE_TOKEN),1,4)
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_FIELD)
 	e0:SetProperty(EFFECT_FLAG_PLAYER_TARGET|EFFECT_FLAG_CANNOT_DISABLE|EFFECT_FLAG_SET_AVAILABLE)
