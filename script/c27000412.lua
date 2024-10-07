@@ -1,6 +1,5 @@
 --Build Rider - Rabbit Tank
-local s,id,o=GetID()
-function s.initial_effect(c)
+function c27000412.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
 	-- Link Summon
 	c:EnableReviveLimit()
@@ -21,9 +20,9 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE + EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP + EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetCountLimit(1,{id,1})
-	e2:SetTarget(s.search_target)
-	e2:SetOperation(s.search_operation)
+	e2:SetCountLimit(1,27000412+1)
+	e2:SetTarget(c27000412.search_target)
+	e2:SetOperation(c27000412.search_operation)
 	c:RegisterEffect(e2)
 
 	-- Negate effects (Quick Effect)
@@ -33,9 +32,9 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1,{id,2})
-	e3:SetTarget(s.distg)
-	e3:SetOperation(s.disop)
+	e3:SetCountLimit(1,27000412+2)
+	e3:SetTarget(c27000412.distg)
+	e3:SetOperation(c27000412.disop)
 	c:RegisterEffect(e3)
 
 	-- Restrict control to 1
@@ -46,8 +45,8 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_SPSUMMON_PROC)
 	e4:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e4:SetRange(LOCATION_EXTRA)
-	e4:SetCondition(s.linkcon)
-	e4:SetOperation(s.linkop)
+	e4:SetCondition(c27000412.linkcon)
+	e4:SetOperation(c27000412.linkop)
 	e4:SetValue(SUMMON_TYPE_LINK)
 	c:RegisterEffect(e4)
 end
@@ -55,40 +54,40 @@ end
 -- CUSTOM LINK SUMMON INIT 
 
 -- Material filter
-function s.matfilter(c,lc,sumtype,tp)
+function c27000412.matfilter(c,lc,sumtype,tp)
 	return c:IsCode(270000402) and not c:IsDisabled()
 end
 -- Link Summon using Kiryu
 -- Custom Link Summon condition
-function s.linkcon(e,c,og)
+function c27000412.linkcon(e,c,og)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local zone=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	return zone>0 and Duel.IsExistingMatchingCard(s.matfilter,tp,LOCATION_MZONE,0,1,nil) 
+	return zone>0 and Duel.IsExistingMatchingCard(c27000412.matfilter,tp,LOCATION_MZONE,0,1,nil) 
 		and Duel.GetMatchingGroupCount(aux.TRUE,tp,LOCATION_MZONE,0,nil)==1
 end
 
 -- Custom Link Summon operation
-function s.linkop(e,tp,eg,ep,ev,re,r,rp,c,og)
+function c27000412.linkop(e,tp,eg,ep,ev,re,r,rp,c,og)
 	local tp=c:GetControler()
-	local g=Duel.SelectMatchingCard(tp,s.matfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c27000412.matfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_MATERIAL+REASON_LINK)
 end
 
 -- CUSTOM LINK SUMMON END
 
 -- Target function: Select a "Build Driver" or "Build Rider" card from the deck
-function s.search_target(e,tp,eg,ep,ev,re,r,rp,chk)
+function c27000412.search_target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		return Duel.IsExistingMatchingCard(s.filter, tp, LOCATION_DECK, 0, 1, nil)
+		return Duel.IsExistingMatchingCard(c27000412.filter, tp, LOCATION_DECK, 0, 1, nil)
 	end
 	Duel.SetOperationInfo(0, CATEGORY_TOHAND, nil, 1, tp, LOCATION_DECK)
 end
 
 -- Operation function: Add the selected card to hand
-function s.search_operation(e,tp,eg,ep,ev,re,r,rp)
+function c27000412.search_operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG, tp, HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp, s.filter, tp, LOCATION_DECK, 0, 1, 1, nil)
+	local g=Duel.SelectMatchingCard(tp, c27000412.filter, tp, LOCATION_DECK, 0, 1, 1, nil)
 	if #g > 0 then
 		Duel.SendtoHand(g, nil, REASON_EFFECT)
 		Duel.ConfirmCards(1-tp, g)
@@ -96,18 +95,18 @@ function s.search_operation(e,tp,eg,ep,ev,re,r,rp)
 end
 
 -- Filter function for "Build Driver" or "Build Rider" cards
-function s.filter(c)
+function c27000412.filter(c)
 	return c:IsSetCard(0xf15) and c:IsAbleToHand()
 end
 
 -- Negate effect (Quick Effect)
-function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c27000412.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsNegatableMonster,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,Card.IsNegatableMonster,tp,0,LOCATION_ONFIELD,1,1,nil)
 end
-function s.disop(e,tp,eg,ep,ev,re,r,rp)
+function c27000412.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFaceup() and not tc:IsDisabled() then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)

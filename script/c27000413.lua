@@ -1,6 +1,5 @@
 --Build Rider - Rabbit Tank Sparkling
-local s,id,o=GetID()
-function s.initial_effect(c)
+function c27000413.initial_effect(c)
 	-- Link Summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xf15),1,3)
@@ -29,10 +28,10 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(s.bpcon)
-	e3:SetTarget(s.bptg)
-	e3:SetOperation(s.bpoperation)
-	e3:SetCountLimit(1,{id,1}) -- Once per turn
+	e3:SetCondition(c27000413.bpcon)
+	e3:SetTarget(c27000413.bptg)
+	e3:SetOperation(c27000413.bpoperation)
+	e3:SetCountLimit(1,27000413+1) -- Once per turn
 	c:RegisterEffect(e3)
 
 	-- Prevent opponent's activation during Battle Phase if you control another "Build Rider"
@@ -42,8 +41,8 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetTargetRange(0,1)
-	e4:SetCondition(s.actcon)
-	e4:SetValue(s.aclimit)
+	e4:SetCondition(c27000413.actcon)
+	e4:SetValue(c27000413.aclimit)
 	c:RegisterEffect(e4)
 
 	--Must be Link Summoned
@@ -56,17 +55,17 @@ function s.initial_effect(c)
 end
 
 -- Condition: Only activate during the Battle Phase
-function s.bpcon(e,tp,eg,ep,ev,re,r,rp)
+function c27000413.bpcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsBattlePhase()
 end
 
 -- Target: No specific targeting required
-function s.bptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c27000413.bptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
 
 -- Operation: Gain ATK and attack all monsters once each
-function s.bpoperation(e,tp,eg,ep,ev,re,r,rp)
+function c27000413.bpoperation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil) -- Get all face-up monsters opponent controls
 	if #g>0 then
@@ -97,12 +96,12 @@ function s.bpoperation(e,tp,eg,ep,ev,re,r,rp)
 end
 
 -- Condition for preventing opponent's activation during Battle Phase
-function s.actcon(e)
+function c27000413.actcon(e)
 	local ph=Duel.GetCurrentPhase()
 	local tp=Duel.GetTurnPlayer()
 	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xf15),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler()) 
 end
-function s.aclimit(e,re,tp)
+function c27000413.aclimit(e,re,tp)
 	return re:IsActiveType(TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 

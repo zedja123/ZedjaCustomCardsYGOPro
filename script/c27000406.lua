@@ -1,30 +1,29 @@
 --Build Driver - Love and Peace
-local s,id,o=GetID()
-function s.initial_effect(c)
+function c27000406.initial_effect(c)
 	-- Activate: Target 1 "Build Rider" Link monster you control
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DESTROY+CATEGORY_RECOVER)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCountLimit(1,{id,1})
-	e1:SetTarget(s.target)
-	e1:SetOperation(s.activate)
+	e1:SetCountLimit(1,27000406+1)
+	e1:SetTarget(c27000406.target)
+	e1:SetOperation(c27000406.activate)
 	c:RegisterEffect(e1)
 end
 
-function s.filter(c)
+function c27000406.filter(c)
 	return c:IsSetCard(0xf15) and c:IsType(TYPE_LINK) and c:IsFaceup()
 end
 
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end
+function c27000406.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c27000406.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c27000406.filter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,c27000406.filter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 
-function s.activate(e,tp,eg,ep,ev,re,r,rp)
+function c27000406.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
 	local atk=0

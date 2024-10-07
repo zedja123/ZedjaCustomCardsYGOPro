@@ -1,15 +1,14 @@
 --Ashens Ruller - Ornstein
-local s,id=GetID()
-function s.initial_effect(c)
+function cc27000205.initial_effect(c)
 	-- Special Summon itself from GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
-	e1:SetCountLimit(1,id)
-	e1:SetTarget(s.sptg)
-	e1:SetOperation(s.spop)
+	e1:SetCountLimit(1,27000205)
+	e1:SetTarget(c27000205.sptg)
+	e1:SetOperation(c27000205.spop)
 	c:RegisterEffect(e1)
 
 	-- Destroy 1 card and place it as a Continuous Spell
@@ -18,9 +17,9 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCountLimit(1,{id,1})
-	e2:SetTarget(s.destg)
-	e2:SetOperation(s.desop)
+	e2:SetCountLimit(1,27000205+1)
+	e2:SetTarget(c27000205.destg)
+	e2:SetOperation(c27000205.desop)
 	c:RegisterEffect(e2)
 
 	-- Send 1 card to the GY during opponent's turn
@@ -29,31 +28,31 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1,{id,2})
-	e3:SetCondition(s.tgcon)
-	e3:SetTarget(s.tgtg)
-	e3:SetOperation(s.tgop)
+	e3:SetCountLimit(1,27000205+2)
+	e3:SetCondition(c27000205.tgcon)
+	e3:SetTarget(c27000205.tgtg)
+	e3:SetOperation(c27000205.tgop)
 	c:RegisterEffect(e3)
 end
 
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c27000205.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 
-function s.spop(e,tp,eg,ep,ev,re,r,rp)
+function c27000205.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 
-function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c27000205.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(Card.IsDestructable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,0,0)
 end
 
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
+function c27000205.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,Card.IsDestructable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
@@ -73,18 +72,18 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
-function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
+function c27000205.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
 
-function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c27000205.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToGrave,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToGrave,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
 end
 
-function s.tgop(e,tp,eg,ep,ev,re,r,rp)
+function c27000205.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		Duel.SendtoGrave(tc,REASON_EFFECT)
