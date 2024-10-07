@@ -76,7 +76,7 @@ end
 function c27000415.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		if Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))==0 then
+		if Duel.SelectOption(tp,aux.Stringid(27000415,2),aux.Stringid(27000415,3))==0 then
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		else
 			Duel.SendtoGrave(tc,REASON_EFFECT)

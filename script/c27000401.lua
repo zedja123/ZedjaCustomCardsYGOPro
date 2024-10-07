@@ -2,7 +2,6 @@
 function c27000401.initial_effect(c)
 	--Effect 1: Special Summon from Deck
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -28,7 +27,6 @@ function c27000401.initial_effect(c)
 
 	--Effect 3: Attribute Change when Banished
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
 	e3:SetCode(EVENT_REMOVE)
 	e3:SetCountLimit(1,27000401+3)

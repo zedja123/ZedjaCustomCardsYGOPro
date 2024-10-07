@@ -2,7 +2,6 @@
 function c27000405.initial_effect(c)
 	-- Tribute 1 "Build Rider" monster, Special Summon from Extra Deck
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -13,7 +12,6 @@ function c27000405.initial_effect(c)
 	
 	-- GY effect: Shuffle banished/GY monster into Deck, Special Summon from Extra Deck
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)

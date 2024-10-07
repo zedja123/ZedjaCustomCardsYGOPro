@@ -36,7 +36,7 @@ end
 function c27000408.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 local g=Duel.GetMatchingGroup(c27000408.thfilter,tp,LOCATION_DECK,0,nil)
-	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(27000408,0)) then
 local g=Duel.SelectMatchingCard(tp,c27000408.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)

@@ -2,7 +2,6 @@
 function c27000403.initial_effect(c)
 	-- Special Summon from hand
 	local e1 = Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id, 0))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -13,7 +12,6 @@ function c27000403.initial_effect(c)
 
 	-- Add "Build Driver" Spell/Trap from GY or Banished to hand
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
@@ -28,7 +26,6 @@ function c27000403.initial_effect(c)
 
 	-- Special Summon itself when used as Link Material
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_TO_GRAVE)

@@ -12,7 +12,6 @@ function c27000207.initial_effect(c)
 
 	-- Special Summon from Deck or GY
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_HAND)
@@ -91,7 +90,7 @@ end
 function c27000207.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToGrave() and eg:IsExists(c27000207.repfilter,1,nil,tp) end
-	return Duel.SelectEffectYesNo(tp,c,aux.Stringid(id,0))
+	return Duel.SelectEffectYesNo(tp,c,aux.Stringid(27000207,0))
 end
 
 -- Replacement effect value
