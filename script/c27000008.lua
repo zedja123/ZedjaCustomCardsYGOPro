@@ -3,10 +3,10 @@ function c27000008.initial_effect(c)
 	-- Special Summon itself if you control only "Prismiant" monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(27000008,0))
-    e1:SetType(EFFECT_TYPE_FIELD)
-    e1:SetCode(EFFECT_SPSUMMON_PROC)
-    e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-    e1:SetRange(LOCATION_HAND)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_SPSUMMON_PROC)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(c27000008.spcon)
 	e1:SetCountLimit(1,27000008)
 	c:RegisterEffect(e1)
@@ -28,15 +28,15 @@ function c27000008.initial_effect(c)
 end
 
 function c27000008.spcon(e,c)
-    if c==nil then return true end
-    local tp=c:GetControler()
-    return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-        and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
-        and not Duel.IsExistingMatchingCard(c27000008.spfilter,tp,LOCATION_MZONE,0,1,nil)
+	if c==nil then return true end
+	local tp=c:GetControler()
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
+		and not Duel.IsExistingMatchingCard(c27000008.spfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 
 function c27000008.spfilter(c)
-    return c:IsFaceup() and not c:IsSetCard(0xf10)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xf10)
 end
 
 
