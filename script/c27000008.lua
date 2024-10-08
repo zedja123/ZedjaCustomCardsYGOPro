@@ -39,10 +39,13 @@ function c27000008.spfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xf10)
 end
 
+function c27000008.spfilter2(c)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xf10)
+end
 
 function c27000008.gytg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c27000008.spfilter,tp,LOCATION_GRAVE,0,1,nil)
+		and Duel.IsExistingMatchingCard(c27000008.spfilter2,tp,LOCATION_GRAVE,0,1,nil)
 		and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
