@@ -36,7 +36,6 @@ function c27000406.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(500)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-		atk = atk + 500
 	end
 	if tc:IsAttribute(ATTRIBUTE_WATER) then
 		-- WATER: Gain 1000 LP
