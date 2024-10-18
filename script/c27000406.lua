@@ -26,7 +26,6 @@ end
 function c27000406.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
-	local atk=0
 	-- Apply effects based on the monster's attributes
 	if tc:IsAttribute(ATTRIBUTE_FIRE) then
 		-- FIRE: Gain 500 ATK
