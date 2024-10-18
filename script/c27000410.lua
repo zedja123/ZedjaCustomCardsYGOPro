@@ -3,7 +3,7 @@ function c27000410.initial_effect(c)
 	-- Link Summon procedure
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xf15),1,1)
-	c:SetSPSummonOnce(id)
+	c:SetSPSummonOnce(27000410)
 	
 	-- Also WIND Attribute
 	local e1=Effect.CreateEffect(c)

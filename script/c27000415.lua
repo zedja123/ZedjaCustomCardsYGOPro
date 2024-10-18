@@ -3,7 +3,7 @@ function c27000415.initial_effect(c)
 	-- Link Summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xf15),1,1)
-	c:SetSPSummonOnce(id)
+	c:SetSPSummonOnce(27000415)
 	-- Also DARK Attribute
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
