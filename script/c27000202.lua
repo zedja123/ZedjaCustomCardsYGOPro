@@ -33,15 +33,15 @@ function c27000202.initial_effect(c)
 end
 function c27000202.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,270000211,0,TYPE_TOKEN,2000,2000,5,RACE_ZOMBIE,ATTRIBUTE_LIGHT) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,27000211,0,TYPE_TOKEN,2000,2000,5,RACE_ZOMBIE,ATTRIBUTE_LIGHT) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 
 function c27000202.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	if Duel.IsPlayerCanSpecialSummonMonster(tp,270000211,0,TYPE_TOKEN,2000,2000,5,RACE_ZOMBIE,ATTRIBUTE_LIGHT) then
-		local token=Duel.CreateToken(tp,270000211)
+	if Duel.IsPlayerCanSpecialSummonMonster(tp,27000211,0,TYPE_TOKEN,2000,2000,5,RACE_ZOMBIE,ATTRIBUTE_LIGHT) then
+		local token=Duel.CreateToken(tp,27000211)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
