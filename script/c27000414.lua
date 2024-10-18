@@ -53,10 +53,14 @@ function c27000414.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 
+function c27000414.ff(c)
+	return c:IsFaceup() and c:IsSetCard(0xf15)
+end
+
 -- Negate and banish condition
 function c27000414.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev)
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xf15),tp,LOCATION_MZONE,0,1,e:GetHandler())
+		and Duel.IsExistingMatchingCard(c27000414.ff,tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 
 -- Negate and banish target
