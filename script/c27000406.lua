@@ -24,7 +24,6 @@ end
 
 function c27000406.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
 	-- Apply effects based on the monster's attributes
 	if tc:IsAttribute(ATTRIBUTE_FIRE) then
 		-- FIRE: Gain 500 ATK
@@ -70,7 +69,6 @@ function c27000406.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EFFECT_PIERCE)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e3)
-	end
 	end
 end
 
