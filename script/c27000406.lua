@@ -22,6 +22,13 @@ function c27000406.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,c27000406.filter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 
+function c27000406.facedown()
+	return c:IsFacedown()
+end
+
+function c27000406.faceup()
+	return c:IsFaceup()
+end
 function c27000406.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	-- Apply effects based on the monster's attributes
@@ -41,7 +48,7 @@ function c27000406.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsAttribute(ATTRIBUTE_EARTH) then
 		-- EARTH: Destroy 1 face-up card your opponent controls
 		if Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_ONFIELD,1,nil) then
-			local g=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,0,LOCATION_ONFIELD,1,1,nil)
+			local g=Duel.SelectMatchingCard(tp,c27000406.faceup,tp,0,LOCATION_ONFIELD,1,1,nil)
 			if #g>0 then
 				Duel.HintSelection(g)
 				Duel.Destroy(g,REASON_EFFECT)
@@ -51,7 +58,7 @@ function c27000406.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsAttribute(ATTRIBUTE_WIND) then
 		-- WIND: Destroy 1 face-down card your opponent controls
 		if Duel.IsExistingMatchingCard(Card.IsFacedown,tp,0,LOCATION_ONFIELD,1,nil) then
-			local g=Duel.SelectMatchingCard(tp,Card.IsFacedown,tp,0,LOCATION_ONFIELD,0,1,nil)
+			local g=Duel.SelectMatchingCard(tp,c27000406.facedown,tp,0,LOCATION_ONFIELD,0,1,nil)
 			if #g>0 then
 				Duel.HintSelection(g)
 				Duel.Destroy(g,REASON_EFFECT)
