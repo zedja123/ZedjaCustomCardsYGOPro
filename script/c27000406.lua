@@ -34,5 +34,41 @@ function c27000406.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 	end
+	if tc:IsAttribute(ATTRIBUTE_WATER) then
+		-- WATER: Gain 1000 LP
+		Duel.Recover(tp,1000,REASON_EFFECT)
+	end
+	if tc:IsAttribute(ATTRIBUTE_EARTH) then
+		-- EARTH: Destroy 1 face-up card your opponent controls
+		local g=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,0,LOCATION_ONFIELD,0,1,nil)
+		if #g>0 then
+			Duel.HintSelection(g)
+			Duel.Destroy(g,REASON_EFFECT)
+		end
+	end
+	if tc:IsAttribute(ATTRIBUTE_WIND) then
+		-- WIND: Destroy 1 face-down card your opponent controls
+		local g=Duel.SelectMatchingCard(tp,Card.IsFacedown,tp,0,LOCATION_ONFIELD,0,1,nil)
+		if #g>0 then
+			Duel.HintSelection(g)
+			Duel.Destroy(g,REASON_EFFECT)
+		end
+	end
+	if tc:IsAttribute(ATTRIBUTE_LIGHT) then
+		-- LIGHT: Attack directly
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_DIRECT_ATTACK)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e1)
+	end
+	if tc:IsAttribute(ATTRIBUTE_DARK) then
+		-- DARK: Inflict piercing battle damage
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_PIERCE)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e1)
+	end
 end
 
