@@ -45,26 +45,33 @@ function c27000406.activate(e,tp,eg,ep,ev,re,r,rp)
 		-- WATER: Gain 1000 LP
 		Duel.Recover(tp,1000,REASON_EFFECT)
 	end
-	if tc:IsAttribute(ATTRIBUTE_EARTH) then
-		-- EARTH: Destroy 1 face-up card your opponent controls
-		if not Duel.IsExistingMatchingCard(c27000406.faceup,tp,0,LOCATION_ONFIELD,1,nil) then return
-			local g=Duel.SelectMatchingCard(tp,c27000406.faceup,tp,0,LOCATION_ONFIELD,1,1,nil)
-			if #g>0 then
-				Duel.HintSelection(g)
-				Duel.Destroy(g,REASON_EFFECT)
-			end
-		end
+if tc:IsAttribute(ATTRIBUTE_EARTH) then
+	-- EARTH: Destroy 1 face-up card your opponent controls
+	if not Duel.IsExistingMatchingCard(c27000406.faceup,tp,0,LOCATION_ONFIELD,1,nil) then 
+		-- Return early if no face-up cards exist
+		return
 	end
-	if tc:IsAttribute(ATTRIBUTE_WIND) then
-		-- WIND: Destroy 1 face-down card your opponent controls
-		if not Duel.IsExistingMatchingCard(c27000406.facedown,tp,0,LOCATION_ONFIELD,1,nil) then return
-			local g=Duel.SelectMatchingCard(tp,c27000406.facedown,tp,0,LOCATION_ONFIELD,0,1,nil)
-			if #g>0 then
-				Duel.HintSelection(g)
-				Duel.Destroy(g,REASON_EFFECT)
-			end
-		end
+	-- Select and destroy 1 face-up card if found
+	local g=Duel.SelectMatchingCard(tp,c27000406.faceup,tp,0,LOCATION_ONFIELD,1,1,nil)
+	if #g>0 then
+		Duel.HintSelection(g)
+		Duel.Destroy(g,REASON_EFFECT)
 	end
+end
+
+if tc:IsAttribute(ATTRIBUTE_WIND) then
+	-- WIND: Destroy 1 face-down card your opponent controls
+	if not Duel.IsExistingMatchingCard(c27000406.facedown,tp,0,LOCATION_ONFIELD,1,nil) then 
+		-- Return early if no face-down cards exist
+		return
+	end
+	-- Select and destroy 1 face-down card if found
+	local g=Duel.SelectMatchingCard(tp,c27000406.facedown,tp,0,LOCATION_ONFIELD,1,1,nil)
+	if #g>0 then
+		Duel.HintSelection(g)
+		Duel.Destroy(g,REASON_EFFECT)
+	end
+end
 	if tc:IsAttribute(ATTRIBUTE_LIGHT) then
 		-- LIGHT: Attack directly
 		local e1=Effect.CreateEffect(e:GetHandler())
