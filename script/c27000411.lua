@@ -78,7 +78,7 @@ function c27000411.retcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 
-function c27000415.faceup(c)
+function c27000411.faceup(c)
 	return c:IsFaceup()
 end
 
