@@ -1,4 +1,4 @@
---Build Driver - Love and Peace
+-- Build Driver - Love and Peace
 function c27000406.initial_effect(c)
 	-- Activate: Target 1 "Build Rider" Link monster you control
 	local e1=Effect.CreateEffect(c)
@@ -6,7 +6,7 @@ function c27000406.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCountLimit(1,{27000406,1})
+	e1:SetCountLimit(1,{27000406,1})
 	e1:SetTarget(c27000406.target)
 	e1:SetOperation(c27000406.activate)
 	c:RegisterEffect(e1)
@@ -29,8 +29,12 @@ end
 function c27000406.faceup(c)
 	return c:IsFaceup()
 end
+
 function c27000406.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
+	
+	if not tc or not tc:IsRelateToEffect(e) then return end
+	
 	-- Apply effects based on the monster's attributes
 	if tc:IsAttribute(ATTRIBUTE_FIRE) then
 		-- FIRE: Gain 500 ATK
@@ -41,37 +45,36 @@ function c27000406.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 	end
+
 	if tc:IsAttribute(ATTRIBUTE_WATER) then
 		-- WATER: Gain 1000 LP
 		Duel.Recover(tp,1000,REASON_EFFECT)
 	end
-if tc:IsAttribute(ATTRIBUTE_EARTH) then
-	-- EARTH: Destroy 1 face-up card your opponent controls
-	if not Duel.IsExistingMatchingCard(c27000406.faceup,tp,0,LOCATION_ONFIELD,1,nil) then 
-		-- Return early if no face-up cards exist
-		return
-	end
-	-- Select and destroy 1 face-up card if found
-	local g=Duel.SelectMatchingCard(tp,c27000406.faceup,tp,0,LOCATION_ONFIELD,1,1,nil)
-	if #g>0 then
-		Duel.HintSelection(g)
-		Duel.Destroy(g,REASON_EFFECT)
-	end
-end
 
-if tc:IsAttribute(ATTRIBUTE_WIND) then
-	-- WIND: Destroy 1 face-down card your opponent controls
-	if not Duel.IsExistingMatchingCard(c27000406.facedown,tp,0,LOCATION_ONFIELD,1,nil) then 
-		-- Return early if no face-down cards exist
-		return
+	if tc:IsAttribute(ATTRIBUTE_EARTH) then
+		-- EARTH: Destroy 1 face-up card your opponent controls
+		if Duel.IsExistingMatchingCard(c27000406.faceup,tp,0,LOCATION_ONFIELD,1,nil) then
+			-- Select and destroy 1 face-up card if found
+			local g=Duel.SelectMatchingCard(tp,c27000406.faceup,tp,0,LOCATION_ONFIELD,1,1,nil)
+			if #g>0 then
+				Duel.HintSelection(g)
+				Duel.Destroy(g,REASON_EFFECT)
+			end
+		end
 	end
-	-- Select and destroy 1 face-down card if found
-	local g=Duel.SelectMatchingCard(tp,c27000406.facedown,tp,0,LOCATION_ONFIELD,1,1,nil)
-	if #g>0 then
-		Duel.HintSelection(g)
-		Duel.Destroy(g,REASON_EFFECT)
+
+	if tc:IsAttribute(ATTRIBUTE_WIND) then
+		-- WIND: Destroy 1 face-down card your opponent controls
+		if Duel.IsExistingMatchingCard(c27000406.facedown,tp,0,LOCATION_ONFIELD,1,nil) then
+			-- Select and destroy 1 face-down card if found
+			local g=Duel.SelectMatchingCard(tp,c27000406.facedown,tp,0,LOCATION_ONFIELD,1,1,nil)
+			if #g>0 then
+				Duel.HintSelection(g)
+				Duel.Destroy(g,REASON_EFFECT)
+			end
+		end
 	end
-end
+
 	if tc:IsAttribute(ATTRIBUTE_LIGHT) then
 		-- LIGHT: Attack directly
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -80,6 +83,7 @@ end
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 	end
+
 	if tc:IsAttribute(ATTRIBUTE_DARK) then
 		-- DARK: Inflict piercing battle damage
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -89,4 +93,3 @@ end
 		tc:RegisterEffect(e1)
 	end
 end
-
