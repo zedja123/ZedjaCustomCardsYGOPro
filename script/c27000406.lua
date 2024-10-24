@@ -22,11 +22,11 @@ function c27000406.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,c27000406.filter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 
-function c27000406.facedown()
+function c27000406.facedown(c)
 	return c:IsFacedown()
 end
 
-function c27000406.faceup()
+function c27000406.faceup(c)
 	return c:IsFaceup()
 end
 function c27000406.activate(e,tp,eg,ep,ev,re,r,rp)
