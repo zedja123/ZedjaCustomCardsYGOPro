@@ -65,21 +65,5 @@ function c27000406.activate(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	end
-	if tc:IsAttribute(ATTRIBUTE_LIGHT) then
-		-- LIGHT: Attack directly
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DIRECT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e1)
-	end
-	if tc:IsAttribute(ATTRIBUTE_DARK) then
-		-- DARK: Inflict piercing battle damage
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_PIERCE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e1)
-	end
 end
 
