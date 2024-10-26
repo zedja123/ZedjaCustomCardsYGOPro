@@ -84,5 +84,5 @@ function c27000408.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c27000408.setfilter(c)
-	return c:IsSetCard(0xf15) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
+	return c:IsSetCard(0xf15) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable() and c:IsFaceup()
 end

@@ -30,7 +30,7 @@ function c27000407.filter(c,e,tp)
 end
 
 function c27000407.filter2(c,e,tp)
-	return c:IsSetCard(0xf15) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0xf15) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
 end
 
 function c27000407.target(e,tp,eg,ep,ev,re,r,rp,chk)
