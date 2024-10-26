@@ -26,11 +26,11 @@ end
 
 -- e1: Tribute 1 "Build Rider" monster, Special Summon from Extra Deck
 function c27000405.spfilter1(c,e,tp)
-	return c:IsSetCard(0xf15) and Duel.GetLocationCountFromEx(tp,tp,c)>0
+	return c:IsSetCard(0xf15)
 		and Duel.IsExistingMatchingCard(c27000405.spfilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp)
 end
 function c27000405.spfilter2(c,e,tp)
-	return c:IsSetCard(0xf15) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xf15) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,c)>0
 end
 function c27000405.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c27000405.spfilter1,1,nil,e,tp) end
